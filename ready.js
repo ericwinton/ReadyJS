@@ -11,9 +11,9 @@ var ReadyJS = function(options) {
 		this[key] = options[key];
 	}
 	
-	this.newRoute = (url, method = 'push') => {
+	this.newRoute = async (url, method = 'push') => {
 		if (this.beforeRouteChange) {
-			this.beforeRouteChange();
+			await this.beforeRouteChange();
 		}
 		
 		// change history state
@@ -35,12 +35,12 @@ var ReadyJS = function(options) {
 		getRoute();
 		
 		if (this.afterRouteChange) {
-			this.afterRouteChange();
+			await this.afterRouteChange();
 		}
 		
-		getRouteData(() => {
+		getRouteData(async () => {
 			if (this.routeDataReady) {
-				this.routeDataReady();
+				await this.routeDataReady();
 			}
 			
 			this.render('root', {}, this.root);
